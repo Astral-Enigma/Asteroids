@@ -30,6 +30,8 @@ def main():
         dt = clock.get_time()
         dt = dt/1000
 
+        new_player.update(dt)
+
 '''
 End of file stuff
 '''
