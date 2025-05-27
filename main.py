@@ -1,6 +1,9 @@
 import pygame
 from constants import *
 from player import *
+from asteroid import *
+from asteroidfield import *
+import random
 
 '''
 GAME LOOP
@@ -17,9 +20,15 @@ def main():
 
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+
     Player.containers = (updatable, drawable)
-    
     new_player = Player(x=SCREEN_WIDTH/2,y=SCREEN_HEIGHT/2)
+
+
+    asteroid_group = pygame.sprite.Group()
+    Asteroid.containers = (asteroid_group, updatable, drawable)
+    AsteroidField.containers = (updatable)
+    asteroid_field = AsteroidField()
 
     while True:
         for event in pygame.event.get():
@@ -36,6 +45,11 @@ def main():
         dt = dt/1000
 
         updatable.update(dt)
+
+        for asteroid in asteroid_group:
+            if asteroid.collision_check(new_player) == True:
+                print("Game Over")
+                pygame.quit()
 
 '''
 End of file stuff
