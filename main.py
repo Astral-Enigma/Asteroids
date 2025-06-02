@@ -3,11 +3,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
-import random
-
-'''
-GAME LOOP
-'''
+from Shots import *
 
 def main():
     pygame.init()
@@ -30,6 +26,11 @@ def main():
     AsteroidField.containers = (updatable)
     asteroid_field = AsteroidField()
 
+    shots_group = pygame.sprite.Group()
+    Shot.containers = (shots_group, updatable, drawable)
+
+#GAME LOOP
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -50,6 +51,14 @@ def main():
             if asteroid.collision_check(new_player) == True:
                 print("Game Over")
                 pygame.quit()
+                return
+        
+        for asteroid in asteroid_group:
+            for shot in shots_group:
+                if asteroid.collision_check(shot) == True:
+                    asteroid.split()
+                    shot.kill() 
+
 
 '''
 End of file stuff
